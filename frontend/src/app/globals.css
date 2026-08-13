@@ -1,0 +1,137 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Default light theme base colors */
+  --theme-bg: #f8fafc;
+  --theme-card: #ffffff;
+  --theme-border: #e2e8f0;
+  --theme-text: #0f172a;
+  --theme-text-secondary: #475569;
+  
+  /* Default black accent for light theme */
+  --primary: 15 23 42;         /* Slate 900 */
+  --primary-hover: 51 65 85;   /* Slate 700 */
+  --primary-light: 241 245 249; /* Slate 100 */
+}
+
+/* Light Theme Accent Modifiers */
+html[data-accent="pink"] {
+  --primary: 236 72 153;         /* Pink 500 */
+  --primary-hover: 219 39 119;   /* Pink 600 */
+  --primary-light: 253 242 248;   /* Pink 50 */
+}
+
+html[data-accent="rose"] {
+  --primary: 244 63 94;          /* Rose 500 */
+  --primary-hover: 225 29 72;    /* Rose 600 */
+  --primary-light: 255 241 242;   /* Rose 50 */
+}
+
+html[data-accent="emerald"] {
+  --primary: 16 185 129;         /* Emerald 500 */
+  --primary-hover: 5 150 105;    /* Emerald 600 */
+  --primary-light: 236 253 245;   /* Emerald 50 */
+}
+
+html[data-accent="black"] {
+  --primary: 15 23 42;
+  --primary-hover: 51 65 85;
+  --primary-light: 241 245 249;
+}
+
+/* Dark Theme Base Colors */
+html.dark {
+  --theme-bg: #0b0f19;
+  --theme-card: #151d30;
+  --theme-border: #1e293b;
+  --theme-text: #f8fafc;
+  --theme-text-secondary: #94a3b8;
+
+  /* Default black (which translates to white in dark mode) accent */
+  --primary: 248 250 252;        /* Slate 50 */
+  --primary-hover: 226 232 240;  /* Slate 200 */
+  --primary-light: 30 41 59;     /* Slate 800 */
+}
+
+/* Dark Theme Accent Modifiers */
+html.dark[data-accent="pink"] {
+  --primary: 244 114 182;        /* Pink 400 */
+  --primary-hover: 236 72 153;   /* Pink 500 */
+  --primary-light: 131 24 67;    /* Pink 900 */
+}
+
+html.dark[data-accent="rose"] {
+  --primary: 251 113 133;        /* Rose 400 */
+  --primary-hover: 244 63 94;    /* Rose 500 */
+  --primary-light: 136 19 55;    /* Rose 900 */
+}
+
+html.dark[data-accent="emerald"] {
+  --primary: 52 211 153;         /* Emerald 400 */
+  --primary-hover: 16 185 129;   /* Emerald 500 */
+  --primary-light: 6 78 59;      /* Emerald 900 */
+}
+
+html.dark[data-accent="black"] {
+  --primary: 248 250 252;
+  --primary-hover: 226 232 240;
+  --primary-light: 30 41 59;
+}
+
+/* Custom Reset and Premium Typography */
+body {
+  color: var(--theme-text);
+  background-color: var(--theme-bg);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Custom premium scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--theme-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--primary) / 0.3);
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Backdrop-blur glassmorphism helper */
+.glassmorphism {
+  background: rgb(var(--theme-card) / 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}

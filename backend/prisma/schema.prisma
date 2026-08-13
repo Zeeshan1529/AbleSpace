@@ -1,0 +1,75 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String?   @unique
+  name      String    @default("Guest")
+  avatarUrl String?
+  isGuest   Boolean   @default(true)
+  tasks     Task[]    @relation("AssigneeTasks")
+  reported  Task[]    @relation("ReporterTasks")
+  projects  Project[] @relation("ProjectLead")
+  comments  Comment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Project {
+  id        String    @id @default(uuid())
+  name      String
+  priority  String    @default("Medium") // Low, Medium, High
+  leadId    String?
+  lead      User?     @relation("ProjectLead", fields: [leadId], references: [id])
+  dueDate   DateTime?
+  tasks     Task[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Task {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  status      String    @default("Todo") // Backlog, Todo, InProgress, Done, OnHold
+  priority    String    @default("None") // Low, Medium, High, Urgent, None
+  dueDate     DateTime?
+  projectId   String?
+  project     Project?  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assigneeId  String?
+  assignee    User?     @relation("AssigneeTasks", fields: [assigneeId], references: [id])
+  reporterId  String?
+  reporter    User?     @relation("ReporterTasks", fields: [reporterId], references: [id])
+  subtasks    Subtask[]
+  comments    Comment[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Subtask {
+  id          String    @id @default(uuid())
+  title       String
+  isCompleted Boolean   @default(false)
+  priority    String    @default("None")
+  dueDate     DateTime?
+  taskId      String
+  task        Task      @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String
+  taskId    String
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+}
